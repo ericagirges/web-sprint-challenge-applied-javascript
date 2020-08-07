@@ -30,7 +30,8 @@ axios
     console.log(response);
   })
   .catch((error) => {
-    debugger;
+      throw error;
+    // debugger;
   });
 
 //function to create article components
@@ -45,7 +46,7 @@ const createArticle = function (object) {
 
   //add classes and text content accordingly
   cardDiv.classList.add("card");
-  headline.classList.add(headline);
+  headline.classList.add("headline");
   headline.textContent = object.headline;
   authorDiv.classList.add("author");
   imgContainer.classList.add("img-container");
@@ -61,29 +62,36 @@ const createArticle = function (object) {
 
   //add click event listener
   cardDiv.addEventListener("click", (event) => {
-    console.log(headline);
+    console.log(object.headline);
   });
 
   return cardDiv;
 };
 
+
+//using function to create card for each article and append to the DOM
 axios
   .get("https://lambda-times-api.herokuapp.com/articles")
   .then((response) => {
+    //locate topics tabs
+    const articlesContainer = document.querySelector(".cards-container")
+
     // iterate over the object. we need to use for in for this
-    for (const key in response.articles) {
+    for (const key in response.data.articles) {
       // get the current list of articles by key (javascript, bootstrap, etc)
-      const topicArticles = response.articles[key];
+      const topicArticles = response.data.articles[key];
 
       // iterate over the articles
       topicArticles.forEach((article) => {
+          console.log("article", article)
         // create an article component
         const articleElement = createArticle(article);
-        // const topicTab = document.querySelector(".topics")
-        console.log(articleElement);
+
+        //append article element to cards container
+        articlesContainer.appendChild(articleElement)
       });
     }
   })
   .catch((error) => {
-    // debugger
+      throw error;
   });
