@@ -93,5 +93,12 @@ axios
     }
   })
   .catch((error) => {
-      throw error;
+      //stretch error message for user
+      const cardContainer = document.querySelector(".cards-container")
+      const errorMessage = document.createElement("h3")
+      errorMessage.textContent = "Requested articles failed to load properly."
+
+      if(error){
+          cardContainer.appendChild(errorMessage)
+      }    
   });
