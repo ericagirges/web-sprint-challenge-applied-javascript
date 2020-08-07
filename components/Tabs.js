@@ -14,7 +14,7 @@ import axios from "axios"
 
 //GET request for data
 axios.get("https://lambda-times-api.herokuapp.com/topics")
-.then(function(response) {
+.then(response => {
     console.log(response)
     //iterate over each topic to create new tabs
     response.data.topics.forEach(title => {
@@ -25,7 +25,7 @@ axios.get("https://lambda-times-api.herokuapp.com/topics")
         topicsDiv.appendChild(newTab)
     })
 })
-.catch(function(error) {
+.catch(error => {
     debugger
   })
 
